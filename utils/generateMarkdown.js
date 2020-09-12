@@ -1,6 +1,7 @@
 function generateMarkdown(data) {
   return `
 ![badmath](https://img.shields.io/github/languages/top/nielsenjared/badmath)
+
 # ${data.title}
 
 ## Description 
@@ -13,8 +14,10 @@ If your README is very long, add a table of contents to make it easy for users t
 
 * [Installation](#installation)
 * [Usage](#usage)
-* [Credits](#credits)
 * [License](#license)
+* [Contributing](#contributing)
+* [Tests](#tests)
+* [Questions](#questions)
 
 
 ## Installation
@@ -34,11 +37,9 @@ ${data.license}
 
 ${data.contributing}
 
-## Tests
+## Questions
 
-${data.tests}
-
-
+${data.questions}
 `;
 }
 
