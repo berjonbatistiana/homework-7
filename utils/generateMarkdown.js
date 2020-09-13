@@ -1,8 +1,10 @@
+const fs = require('fs');
+
 function generateMarkdown(data) {
   return `
-${data.badges.map(badge =>{
-  return `![](${badge})`;
-}).join(' ')}
+${data.badges.map(badge => {
+    return `![](${badge})`;
+  }).join(' ')}
 
 # ${data.title}
 
@@ -39,8 +41,14 @@ ${data.contributing}
 
 ## Questions
 
-${data.questions}
+Questions? Contact me!
+![](${data.questions.avatar})
+${data.questions.email}
 `;
 };
 
-module.exports = generateMarkdown;
+function markdownToFile(fileName, data) {
+  fs.writeFile(__dirname + `/../${fileName}`, generateMarkdown(data), err => err ? console.log(err) : console.log('success'));
+}
+
+module.exports = { generateMarkdown, markdownToFile };

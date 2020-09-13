@@ -1,82 +1,56 @@
-const fs = require('fs');
 const inquirer = require('inquirer');
 const api = require('./utils/api');
-const generateMarkdown = require('./utils/generateMarkdown');
+const { markdownToFile } = require('./utils/generateMarkdown');
+const { askUsername, questions } = require('./utils/questions');
 
-const questions = [
-    {
-        type: 'input',
-        name: 'username',
-        message: 'What is your github username?'
-    },
-    {
-        type: 'input',
-        name: 'title',
-        message: 'What is your project title?'
-    },
-    {
-        type: 'input',
-        name: 'desc',
-        message: 'What is the project\'s description?'
-    },
-    {
-        type: 'input',
-        name: 'installation',
-        message: 'How to install your project?'
-    },
-    {
-        type: 'input',
-        name: 'usage',
-        message: 'How to use your project?'
-    },
-    {
-        type: 'input',
-        name: 'contributing',
-        message: 'How to contribute to your project?'
+async function init() {
+    
+    let license = 'No registered license.'
+    const usernameResponse = await inquirer.prompt(askUsername)
+    const ghResponse = await api.getUser(usernameResponse.username);
+    const data = ghResponse.data;
+    const repos = data.map(repo => repo.name);
+    const response = await inquirer.prompt(questions(repos))
+    const targetRepo = // select the repo from the list of repo
+    data.find(repo => repo.name === response.title);
+    
+    // collect languages used and turn them into badges
+    const langUrl = targetRepo.languages_url;
+    const { data: langData } = await api.getLanguage(langUrl);
+    const langs = githubLangBadge(langData ? langData : {});
+    const badges = []
+
+
+    for (lang of langs) {
+        badges.push(`https://img.shields.io/badge/${lang.label}-${lang.message}-green`);
     }
-];
 
-function writeToFile(fileName, data) {
-    fs.writeFile(__dirname + `/${fileName}`, generateMarkdown(data), err => err? console.log(err): console.log('success'));
-}
+    // collect license if exists and turn it into a badge
+    if (targetRepo.license) {
+        license = `Licensed under ${targetRepo.license.name}`;
+        badges.push(`https://img.shields.io/badge/License-${targetRepo.license.spdx_id}-blue`);
+    }
 
-function init() {
+    // collect the owner avatar and use them for contact info
+    const contact = {
+        avatar: targetRepo.owner.avatar_url,
+        email: response.contact
+    }
 
-    inquirer.prompt(questions).then(async response => {
-        const ghResponse = await api.getUser(response.username);
-        const data = ghResponse.data;
-        let targetRepo;
+    const mdData = {
+        badges: badges,
+        title: data.name,
+        description: data.description,
+        installation: response.installation,
+        usage: response.usage,
+        license: license,
+        contributing: response.contributing,
+        questions: contact
+    }
 
-        for (repo of data) {
-            if (repo.name === response.title) {
-                targetRepo = repo;
-            }
-        }
+    markdownToFile('README.md', mdData);
 
-        const langUrl = targetRepo.languages_url;
-        const { data: langData } = await api.getLanguage(langUrl);
-        const langs = githubLangBadge(langData ? langData : {});
 
-        const badges = []
-
-        for (lang of langs) {
-            badges.push(`https://img.shields.io/badge/${lang.label}-${lang.message}-blue`);
-        }
-
-        const mdData = {
-            badges: badges,
-            title: data.name,
-            description: response.desc,
-            installation: response.installation,
-            usage: response.usage,
-            license: data.license? data.license: 'No licenses registered',
-            contributing: response.contributing,
-            questions: response.questions
-        }
-
-        writeToFile('README.md', mdData);
-
-    });
 
 }
 
@@ -98,4 +72,4 @@ function githubLangBadge(langs) {
 
     return badges;
 }
-init();
+init()
