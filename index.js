@@ -1,46 +1,61 @@
 const inquirer = require('inquirer');
 const api = require('./utils/api');
 const { markdownToFile } = require('./utils/generateMarkdown');
-const { askUsername, questions } = require('./utils/questions');
+const { askUsername, questions, askEmail } = require('./utils/questions');
 
 async function init() {
-    
+
     let license = 'No registered license.'
+
+    // Ask username
     const usernameResponse = await inquirer.prompt(askUsername)
-    const ghResponse = await api.getUser(usernameResponse.username);
-    const data = ghResponse.data;
+
+    // Fetch username from github
+    const ghResponseUser = await api.getUser(usernameResponse.username);
+    const userData = ghResponseUser.data;
+
+    // Fetch repos from github
+    const ghResponseRepo = await api.getUserRepo(usernameResponse.username);
+    const data = ghResponseRepo.data;
     const repos = data.map(repo => repo.name);
+
+    // Find target repo
     const response = await inquirer.prompt(questions(repos))
     const targetRepo = // select the repo from the list of repo
-    data.find(repo => repo.name === response.title);
+        data.find(repo => repo.name === response.title);
+
+    // Check for email
+    const userEmail = userData.email? 
+        userData.email : 
+        (await inquirer.prompt(askEmail)).email;
     
-    // collect languages used and turn them into badges
+    // Collect languages used and turn them into badges
     const langUrl = targetRepo.languages_url;
     const { data: langData } = await api.getLanguage(langUrl);
     const langs = githubLangBadge(langData ? langData : {});
     const badges = []
 
-
     for (lang of langs) {
         badges.push(`https://img.shields.io/badge/${lang.label}-${lang.message}-green`);
     }
 
-    // collect license if exists and turn it into a badge
+    // Collect license if exists and turn it into a badge
     if (targetRepo.license) {
         license = `Licensed under ${targetRepo.license.name}`;
         badges.push(`https://img.shields.io/badge/License-${targetRepo.license.spdx_id}-blue`);
     }
 
-    // collect the owner avatar and use them for contact info
+    // Collect the owner avatar and use them for contact info
     const contact = {
         avatar: targetRepo.owner.avatar_url,
-        email: response.contact
+        email: userEmail
     }
 
+    // Object to be sent to markdown generator
     const mdData = {
         badges: badges,
-        title: data.name,
-        description: data.description,
+        title: response.title,
+        description: data.description ? data.description : '',
         installation: response.installation,
         usage: response.usage,
         license: license,
@@ -49,8 +64,6 @@ async function init() {
     }
 
     markdownToFile('README.md', mdData);
-
-
 
 }
 

@@ -17,13 +17,13 @@ const questions = repos => [
     },
     {
         type: 'input',
-        name: 'contributing',
-        message: 'What are the guidelines on how to contribute to your project?'
+        name: 'test',
+        message: 'How do you test your project?'
     },
     {
         type: 'input',
-        name: 'contact',
-        message: "What is your email?"
+        name: 'contributing',
+        message: 'What are the guidelines on how to contribute to your project?'
     },
     {
         type: 'list',
@@ -34,7 +34,7 @@ const questions = repos => [
     {
         type: 'input',
         name: 'screenshots',
-        message: 'Enter your screenshot/s (separated by spaces if more than one).',
+        message: 'Enter your screenshot link/s (separated by spaces if more than one).',
         when: answers => answers.askScreenshot === 'yes'
     }
 ];
@@ -47,4 +47,13 @@ const askUsername = [
     }
 ]
 
-module.exports = {askUsername, questions};
+const askEmail = [
+
+    {
+        type: 'input',
+        name: 'email',
+        message: "No public e-mail was found in your GitHub profile. Please enter an e-mail address."
+    },
+]
+
+module.exports = {askUsername, questions, askEmail};

@@ -2,17 +2,19 @@ const fs = require('fs');
 
 function generateMarkdown(data) {
   return `
-${data.badges.map(badge => {
+
+# ${data.title}
+
+  ${data.badges.map(badge => {
     return `![](${badge})`;
   }).join(' ')}
 
-# ${data.title}
 
 ## Description 
 
 ${data.description}
 
-## Table of Contents (Optional)
+## Table of Contents
 
 * [Installation](#installation)
 * [Usage](#usage)
@@ -38,6 +40,10 @@ ${data.license}
 ## Contributing
 
 ${data.contributing}
+
+## Tests
+
+${data.test}
 
 ## Questions
 
