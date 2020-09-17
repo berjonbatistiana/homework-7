@@ -50,5 +50,9 @@ No testing yet
 ## Questions
 
 Questions? Contact me!
+
+
 ![](https://avatars2.githubusercontent.com/u/820155?v=4)
-bjbatistiana@gmail.copm
+
+
+bjbatistiana@gmail.com
