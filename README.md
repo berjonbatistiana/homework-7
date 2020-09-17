@@ -1,9 +1,8 @@
 
 
-# 02-06-Activity-GithubPagesProjects
+# Homework-7
 
-  ![](https://img.shields.io/badge/HTML-100.0-green)
-
+  ![](https://img.shields.io/badge/JavaScript-100.00-green)
 
 ## Description 
 
@@ -22,12 +21,13 @@
 
 ## Installation
 
-a
+```npm i```
 
 
 ## Usage 
 
-b
+in sh:
+```node index.js```
 
 ## License
 
@@ -35,18 +35,20 @@ No registered license.
 
 ## Contributing
 
-d
+No guidelines are used for this project yet.
 
 ## Tests
 
-c
+No testing yet
 
 ## Screenshots
 
-![]a
+![](./screenshots/ss1.png)
+![](./screenshots/ss2.png)
+![](./screenshots/ssgif.gif)
 
 ## Questions
 
 Questions? Contact me!
 ![](https://avatars2.githubusercontent.com/u/820155?v=4)
-a
+bjbatistiana@gmail.copm
