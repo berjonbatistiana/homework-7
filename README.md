@@ -43,9 +43,9 @@ No testing yet
 
 ## Screenshots
 
-![](./screenshots/ss1.png)
-![](./screenshots/ss2.png)
-![](./screenshots/ssgif.gif)
+![Screenshot 1](./screenshots/ss1.png)
+![Screenshot 2](./screenshots/ss2.png)
+![GIF preview](./screenshots/ssgif.gif)
 
 ## Questions
 
