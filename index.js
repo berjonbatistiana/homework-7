@@ -21,6 +21,10 @@ async function init() {
 
     // Find target repo
     const response = await inquirer.prompt(questions(repos))
+    
+    // Fetch screenshots
+    const screenshots = response.screenshots.split(' ').map((_info) => `![]${_info}`).join('\n')
+
     const targetRepo = // select the repo from the list of repo
         data.find(repo => repo.name === response.title);
 
@@ -59,6 +63,8 @@ async function init() {
         installation: response.installation,
         usage: response.usage,
         license: license,
+        tests: response.test,
+        screenshots: screenshots,
         contributing: response.contributing,
         questions: contact
     }

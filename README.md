@@ -1,8 +1,8 @@
 
 
-# RDR2CollectorsMap
+# 02-06-Activity-GithubPagesProjects
 
-  ![](https://img.shields.io/badge/JavaScript-80.3-green) ![](https://img.shields.io/badge/HTML-13.2-green) ![](https://img.shields.io/badge/CSS-6.5-green) ![](https://img.shields.io/badge/License-Unlicense-blue)
+  ![](https://img.shields.io/badge/HTML-100.0-green)
 
 
 ## Description 
@@ -16,32 +16,37 @@
 * [License](#license)
 * [Contributing](#contributing)
 * [Tests](#tests)
+* [Screenshots](#screenshots)
 * [Questions](#questions)
 
 
 ## Installation
 
-
+a
 
 
 ## Usage 
 
-
+b
 
 ## License
 
-Licensed under The Unlicense
+No registered license.
 
 ## Contributing
 
-
+d
 
 ## Tests
 
-undefined
+c
+
+## Screenshots
+
+![]a
 
 ## Questions
 
 Questions? Contact me!
 ![](https://avatars2.githubusercontent.com/u/820155?v=4)
-b.g.c
+a

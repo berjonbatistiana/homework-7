@@ -21,6 +21,7 @@ ${data.description}
 * [License](#license)
 * [Contributing](#contributing)
 * [Tests](#tests)
+* [Screenshots](#screenshots)
 * [Questions](#questions)
 
 
@@ -43,7 +44,11 @@ ${data.contributing}
 
 ## Tests
 
-${data.test}
+${data.tests}
+
+## Screenshots
+
+${data.screenshots}
 
 ## Questions
 
